@@ -37,25 +37,29 @@ For a method that returns an instance of Foo here are a few examples of with the
 
 1) This will return an instance of Foo with any non initialized lazily initialized collections set to null.
 
-```@ReplicateResult(fetchEager = false)
-```
+<pre>
+@ReplicateResult(fetchEager = false)
+</pre>
 
 
 2) This will return an instance of Foo with any property named *bar* set to null.
 
-```@ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
-```
+<pre>
+@ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
+</pre>
 
 3) The same would apply if Foo contained a collection named *bars"
 
-```@ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bars")})
-```
+<pre>
+@ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bars")})
+</pre>
 
 
 4) Any point in the object graph can be excluded. For example if the returned instance of Foo contains an instance of Bar which contains an property named *baz* then this will return everything excluding *baz*.
 
-```@ReplicateResult(exclude = {@ReplicateProperty(clazz = Bar.class, property="baz")})
-```
+<pre>
+@ReplicateResult(exclude = {@ReplicateProperty(clazz = Bar.class, property="baz")})
+</pre>
 
 
 5) The excluded properties are a list so you can specify as many as you want.
@@ -73,8 +77,9 @@ For a method that returns an instance of Foo here are a few examples of with the
 
 6) The fetchEager property and excludes can be used together.
 
-```@ReplicateResult(fetchEager = false, exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
-```
+<pre>
+@ReplicateResult(fetchEager = false, exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
+</pre>
 
 
 ## Download
