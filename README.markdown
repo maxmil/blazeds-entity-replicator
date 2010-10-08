@@ -51,11 +51,11 @@ For a method that returns an instance of Foo here are a few examples of with the
 5) The excluded properties are a list so you can specify as many as you want.
 
 ```@ReplicateResult(exclude = {
-      @ReplicateProperty(clazz = Foo.class, property="bar"),
-      @ReplicateProperty(clazz = Foo.class, property="baz"),
-      @ReplicateProperty(clazz = Bar.class, property="bars"),
-      @ReplicateProperty(clazz = Bar.class, property="baz"),
-      @ReplicateProperty(clazz = Baz.class, property="foos")})
+@ReplicateProperty(clazz = Foo.class, property="bar"),
+@ReplicateProperty(clazz = Foo.class, property="baz"),
+@ReplicateProperty(clazz = Bar.class, property="bars"),
+@ReplicateProperty(clazz = Bar.class, property="baz"),
+@ReplicateProperty(clazz = Baz.class, property="foos")})
 ```
 
 
