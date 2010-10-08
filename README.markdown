@@ -27,52 +27,52 @@ Here are a few examples of method definitions with the annotation
 1) This will return an instance of Foo with any non initialized lazily initialized collections set to null.
 
 ```java
-  @ReplicateResult(fetchEager = false)
-  public Foo getFoo();
+   @ReplicateResult(fetchEager = false)
+   public Foo getFoo();
 ```
 
 
 2) This will return an instance of Foo with any property named *bar* set to null.
 
 ```java
-  @ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
-  public Foo getFoo();
+   @ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
+   public Foo getFoo();
 ```
 
 3) The same would apply if Foo contained a collection named *bars"
 
 ```java
-  @ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bars")})
-  public Foo getFoo();
+   @ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bars")})
+   public Foo getFoo();
 ```
 
 
 4) Any point in the object graph can be excluded. For example if the returned instance of Foo contains an instance of Bar which contains an property named *baz* then this will return everything excluding *baz*.
 
 ```java
-  @ReplicateResult(exclude = {@ReplicateProperty(clazz = Bar.class, property="baz")})
-  public Foo getFoo();
+   @ReplicateResult(exclude = {@ReplicateProperty(clazz = Bar.class, property="baz")})
+   public Foo getFoo();
 ```
 
 
 5) The excluded properties are a list so you can specify as many as you want.
 
 ```java
-  @ReplicateResult(exclude = {
-     @ReplicateProperty(clazz = Foo.class, property="bar"),
-     @ReplicateProperty(clazz = Foo.class, property="baz"),
-     @ReplicateProperty(clazz = Bar.class, property="bars"),
-     @ReplicateProperty(clazz = Bar.class, property="baz"),
-     @ReplicateProperty(clazz = Baz.class, property="foos")})
-  public Foo getFoo();
+   @ReplicateResult(exclude = {
+      @ReplicateProperty(clazz = Foo.class, property="bar"),
+      @ReplicateProperty(clazz = Foo.class, property="baz"),
+      @ReplicateProperty(clazz = Bar.class, property="bars"),
+      @ReplicateProperty(clazz = Bar.class, property="baz"),
+      @ReplicateProperty(clazz = Baz.class, property="foos")})
+   public Foo getFoo();
 ```
 
 
 6) The fetchEager property and excludes can be used together.
 
 ```java
-  @ReplicateResult(fetchEager = false, exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
-  public Foo getFoo();
+   @ReplicateResult(fetchEager = false, exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
+   public Foo getFoo();
 ```
 
 
