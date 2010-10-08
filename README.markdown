@@ -8,7 +8,7 @@ What's more Blaze serialization can cause problems with lazily loaded entities.
 
 ## The solution
 
-There are already several solutions to this problem. [[DpHibernate|http://code.google.com/p/dphibernate/] and [[Gilead|http://noon.gilead.free.fr/gilead/]] being two very complete solutions. However if you need something a bit simpler than this may be for you.
+There are already several solutions to this problem. <a href="http://code.google.com/p/dphibernate">DpHibernate</a> and <a href="http://noon.gilead.free.fr/gilead">Gilead</a> being two very complete solutions. However if you need something a bit simpler than this may be for you.
 
 It consists of a **annotation** that you can add to methods that return results to Blaze DS. This annotation can control which parts of the object graph you are returning should be serialized and sent to the flex client.
 
@@ -16,7 +16,7 @@ It consists of a **annotation** that you can add to methods that return results 
 
 First you need to substitute the blaze java adapter with a custom one.
 
-In remoting-config.xml your java adapter should use the class com.github.blazeds.replicator.HibernateAdapter
+In remoting-config.xml your java adapter should use the custom HibernateAdapter class.
 
 <code>
    <adapter-definition id="java-object" class="com.github.blazeds.replicator.HibernateAdapter" />
