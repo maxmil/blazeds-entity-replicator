@@ -1,5 +1,0 @@
-This project uses Maven 2 as its build system.
-
-To build the project, from the root directory issue the command: 
-
-mvn clean install 
