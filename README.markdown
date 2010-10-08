@@ -84,7 +84,7 @@ For a method that returns an instance of Foo here are a few examples of with the
 
 ## Download
 
-You can download the latest release from the "Download" link on github.
+You can download the latest release from the "Downloads" link at the top of the page.
 
 
 ## How to build it
