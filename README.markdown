@@ -14,7 +14,20 @@ It consists of a **annotation** that you can add to methods that return results 
 
 ## How to use it
 
-There are two ways to configure it: 
+First you need to substitute the blaze java adapter with a custom one.
+
+In remoting-config.xml your java adapter should use the class com.github.blazeds.replicator.HibernateAdapter
+
+<adapters>
+   <adapter-definition id="java-object"
+                       class="flex.messaging.services.remoting.adapters.JavaAdapter"
+                       default="true" />
+</adapters>
+
+
+You can now annotate methods that return results serialized by BlazeDS by adding the **@ReplicatorResult** annotation
+
+There are two ways to configure the annotation: 
 
 1. **fetchEager** (true by default): When false any collection that has not been initialized by Hibernate will not be included in serialization 
 
