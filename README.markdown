@@ -18,11 +18,11 @@ First you need to substitute the blaze java adapter with a custom one.
 
 In remoting-config.xml your java adapter should use the class com.github.blazeds.replicator.HibernateAdapter
 
-<code>
-   
+<pre>
+
    <adapter-definition id="java-object" class="com.github.blazeds.replicator.HibernateAdapter" />
    
-</code>
+</pre>
 
 You can now annotate methods that return results serialized by BlazeDS by adding the **@ReplicatorResult** annotation
 
