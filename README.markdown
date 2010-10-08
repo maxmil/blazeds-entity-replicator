@@ -26,8 +26,9 @@ Here are a few examples of method definitions with the annotation
 
 1) This will return an instance of Foo with any non initialized lazily initialized collections set to null.
 
-```java
+```
    @ReplicateResult(fetchEager = false)
+
    public Foo getFoo();
 ```
 
