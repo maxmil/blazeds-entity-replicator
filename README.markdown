@@ -48,7 +48,7 @@ For a method that returns an instance of Foo here are a few examples of with the
 @ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bar")})
 </pre>
 
-3) The same would apply if Foo contained a collection named *bars"
+3) The same would apply if Foo contained a collection named *bars*
 
 <pre>
 @ReplicateResult(exclude = {@ReplicateProperty(clazz = Foo.class, property="bars")})
