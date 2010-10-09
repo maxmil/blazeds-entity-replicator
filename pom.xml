@@ -38,6 +38,8 @@
 	<properties>
 		<blazeds.version>3.2.0.3978</blazeds.version>
 		<spring.version>2.5.6</spring.version>
+		<hibernate.version>3.2.7.ga</hibernate.version>
+		<beanlib.version>5.0.2beta</beanlib.version>
 		<spring-flex.version>1.0.1.RELEASE</spring-flex.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -63,17 +65,18 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
-			<version>3.2.7.ga</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring</artifactId>
 			<version>${spring.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.beanlib</groupId>
 			<artifactId>beanlib-hibernate</artifactId>
-			<version>5.0.2beta</version>
+			<version>${beanlib.version}</version>
 		</dependency>
 	</dependencies>
 </project>

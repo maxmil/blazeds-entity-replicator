@@ -55,9 +55,21 @@ import flex.messaging.services.remoting.adapters.JavaAdapter;
  */
 public class HibernateAdapter extends JavaAdapter {
 
-	Hibernate3BeanReplicator replicator;
+	private Hibernate3BeanReplicator replicator;
 
-	Map<Method, ReplicationPropertyFilter> filterCache;
+	private Map<Method, ReplicationPropertyFilter> filterCache;
+	
+	private boolean aopPresent;
+
+	public HibernateAdapter() {
+		super();
+		checkAOPPresent();
+	}
+
+	public HibernateAdapter(boolean enableManagement) {
+		super(enableManagement);
+		checkAOPPresent();
+	}
 
 	@Override
 	public Object invoke(Message message) {
@@ -67,13 +79,13 @@ public class HibernateAdapter extends JavaAdapter {
 			filterCache = new HashMap<Method, ReplicationPropertyFilter>();
 		}
 
-		// Invoke incomming service call via blazeds
+		// Invoke incoming service call via blazeds
 		Object result = super.invoke(message);
 		if (result == null) {
 			return null;
 		}
 
-		// Get the method and check if filter is already in the cache
+		// Get method and check for filter in cache
 		Method method = getMethod(message);
 		ReplicationPropertyFilter filter;
 		if (filterCache.containsKey(method)) {
@@ -114,15 +126,21 @@ public class HibernateAdapter extends JavaAdapter {
 		return result;
 	}
 
+	/**
+	 * @param message
+	 * @return
+	 */
 	private Method getMethod(Message message) {
 
-		// Get class of method to be invoked
+		// Have to create instance to get class
 		RemotingDestination remotingDestination = (RemotingDestination) getDestination();
 		FactoryInstance factoryInstance = remotingDestination
 				.getFactoryInstance();
 		Object instance = createInstance(factoryInstance.getInstanceClass());
+		
+		// Class may be wrapped in proxy
 		Class<?> targetClass;
-		if (AopUtils.isAopProxy(instance) || AopUtils.isCglibProxy(instance)) {
+		if (aopPresent && AopUtils.isAopProxy(instance) || AopUtils.isCglibProxy(instance)) {
 			targetClass = AopUtils.getTargetClass(instance);
 		} else {
 			targetClass = instance.getClass();
@@ -136,5 +154,14 @@ public class HibernateAdapter extends JavaAdapter {
 				targetClass, operation, parameters);
 
 		return method;
+	}
+	
+	private void checkAOPPresent(){
+		try{
+			Class.forName("org.springframework.aop.framework.AopProxyUtils", false, null);
+			aopPresent = true;
+		}catch(ClassNotFoundException e){
+			aopPresent = false;
+		}
 	}
 }
