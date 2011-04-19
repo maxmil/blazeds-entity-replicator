@@ -122,8 +122,31 @@ public class HibernateAdapter extends JavaAdapter {
 			replicator.initCustomTransformerFactory(factory);
 		}
 
-		result = replicator.copy(result);
+	   // Bean lib only handles beans not collections
+		if (result instanceof Collection<?>) {
+			result = replicateCollection((Collection<?>) result);
+		} else {
+			result = replicator.copy(result);
+		}
+		
 		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<?> replicateCollection(Collection<?> collection) {
+
+		// All collections are recreated as array lists since in blaze-ds
+		// all collection classes are mapped to ArrayCollection
+		@SuppressWarnings("rawtypes")
+		ArrayList list = new ArrayList();
+		for (Object o : collection) {
+			if (o instanceof Collection<?>) {
+				list.add(replicateCollection((Collection<?>) o));
+			} else {
+				list.add(replicator.copy(o));
+			}
+		}
+		return list;
 	}
 
 	/**
