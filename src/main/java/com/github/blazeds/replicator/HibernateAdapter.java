@@ -17,6 +17,7 @@
 package com.github.blazeds.replicator;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class HibernateAdapter extends JavaAdapter {
 	private Hibernate3BeanReplicator replicator;
 
 	private Map<Method, ReplicationPropertyFilter> filterCache;
-	
+
 	private boolean aopPresent;
 
 	public HibernateAdapter() {
@@ -122,31 +123,16 @@ public class HibernateAdapter extends JavaAdapter {
 			replicator.initCustomTransformerFactory(factory);
 		}
 
-	   // Bean lib only handles beans not collections
+		// Bean lib only handles beans not collections
 		if (result instanceof Collection<?>) {
-			result = replicateCollection((Collection<?>) result);
+			CollectionWrapper wrapper = new CollectionWrapper();
+			wrapper.setCollection((Collection<?>) result);
+			result = replicator.copy(wrapper).getCollection();
 		} else {
 			result = replicator.copy(result);
 		}
-		
+
 		return result;
-	}
-
-	@SuppressWarnings("unchecked")
-	private List<?> replicateCollection(Collection<?> collection) {
-
-		// All collections are recreated as array lists since in blaze-ds
-		// all collection classes are mapped to ArrayCollection
-		@SuppressWarnings("rawtypes")
-		ArrayList list = new ArrayList();
-		for (Object o : collection) {
-			if (o instanceof Collection<?>) {
-				list.add(replicateCollection((Collection<?>) o));
-			} else {
-				list.add(replicator.copy(o));
-			}
-		}
-		return list;
 	}
 
 	/**
@@ -160,10 +146,11 @@ public class HibernateAdapter extends JavaAdapter {
 		FactoryInstance factoryInstance = remotingDestination
 				.getFactoryInstance();
 		Object instance = createInstance(factoryInstance.getInstanceClass());
-		
+
 		// Class may be wrapped in proxy
 		Class<?> targetClass;
-		if (aopPresent && AopUtils.isAopProxy(instance) || AopUtils.isCglibProxy(instance)) {
+		if (aopPresent && AopUtils.isAopProxy(instance)
+				|| AopUtils.isCglibProxy(instance)) {
 			targetClass = AopUtils.getTargetClass(instance);
 		} else {
 			targetClass = instance.getClass();
@@ -178,12 +165,13 @@ public class HibernateAdapter extends JavaAdapter {
 
 		return method;
 	}
-	
-	private void checkAOPPresent(){
-		try{
-			Class.forName("org.springframework.aop.framework.AopProxyUtils", false, null);
+
+	private void checkAOPPresent() {
+		try {
+			Class.forName("org.springframework.aop.framework.AopProxyUtils",
+					false, null);
 			aopPresent = true;
-		}catch(ClassNotFoundException e){
+		} catch (ClassNotFoundException e) {
 			aopPresent = false;
 		}
 	}
